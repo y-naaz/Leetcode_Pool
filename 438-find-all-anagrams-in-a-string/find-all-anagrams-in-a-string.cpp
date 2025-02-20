@@ -1,18 +1,11 @@
 class Solution {
 public:
-    bool allzeros(vector<int>& counter) {
-        for (int &i : counter) {
-            if (i != 0) return false;
-        }
-        return true;
-    }
-
     vector<int> findAnagrams(string s, string p) {
         int n = s.size();
-        int k = p.size();
+        int reqCount = p.size();
+
         vector<int> counter(26, 0);
 
-        // Count frequency of characters in pattern
         for (char ch : p) {
             counter[ch - 'a']++;
         }
@@ -21,20 +14,20 @@ public:
         int i = 0, j = 0;
 
         while (j < n) {
-            // Add the current character to the window
-            counter[s[j] - 'a']--;
-
-            // When the window size matches the pattern size
-            if (j - i + 1 == k) {
-                if (allzeros(counter)) {
+            counter[s[j]-'a']--;
+            if (counter[s[j] - 'a'] >= 0) {
+                reqCount--;
+            }
+            while (reqCount == 0) {
+                if (j - i + 1 == p.size()) {
                     ans.push_back(i);
                 }
-
-                // Before sliding the window, restore s[i] and move i forward
-                counter[s[i] - 'a']++;
+                counter[s[i]-'a']++;
+                if (counter[s[i] - 'a'] > 0) {
+                    reqCount++;  
+                }
                 i++;
             }
-
             j++;
         }
 
