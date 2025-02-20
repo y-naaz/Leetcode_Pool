@@ -17,9 +17,9 @@ public:
             return "";
         if (!root->left && !root->right)
             return to_string(root->val);
-        if (!root->left && root->right)
+        if (!root->left )
             return to_string(root->val) + "()" + "("+tree2str(root->right)+")";
-        if (!root->right && root->left)
+        if (!root->right )
             return to_string(root->val) + "(" + tree2str(root->left) + ")";
         return to_string(root->val) + "(" + tree2str(root->left) + ")" + "(" +
                tree2str(root->right) + ")";
